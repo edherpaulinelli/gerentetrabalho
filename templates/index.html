@@ -10,33 +10,89 @@
         $(document).ready(function(){
             $("#suporte-ipm").click(function(){
                 $("#opcoes-suporte-ipm").toggle();
+                $("#opcoes-suporte-unidades").hide();  // Esconder o outro menu ao clicar neste
+                $("#Trabalho-Extra").hide();  // Esconder o menu de Trabalho Extra ao clicar neste
+            });
+
+            $("#suporte-unidades").click(function(){
+                $("#opcoes-suporte-unidades").toggle();
+                $("#opcoes-suporte-ipm").hide();  // Esconder o outro menu ao clicar neste
+                $("#Trabalho-Extra").hide();  // Esconder o menu de Trabalho Extra ao clicar neste
+            });
+
+            $("#trabalho-extra").click(function(){
+                $("#Trabalho-Extra").toggle();
+                $("#opcoes-suporte-ipm").hide();  // Esconder o menu de Suporte IPM ao clicar neste
+                $("#opcoes-suporte-unidades").hide();  // Esconder o menu de Suporte Unidades ao clicar neste
             });
         });
     </script>
+    <style>
+        #opcoes-suporte-ipm label,
+        #opcoes-suporte-unidades label,
+        #Trabalho-Extra label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar">
         <div>
-            <!-- Adicione o logo ou o nome do site aqui -->
             <a href="#">Logo </a>
         </div>
         <div class="menu-tabs">
-            <!-- Abas do menu -->
             <a href="#" id="suporte-ipm">Suporte IPM</a>
-            <a href="#">Suporte Unidades</a>
-            <a href="#">Trabalho Extra</a>
+            <a href="#" id="suporte-unidades">Suporte Unidades</a>
+            <a href="#" id="trabalho-extra">Trabalho Extra</a>
         </div>
     </div>
 
-    <!-- Contêiner de opções para Suporte IPM -->
     <div id="opcoes-suporte-ipm" style="display: none;">
         <h3>Opções de Suporte IPM</h3>
-        <label for="opcao1"><input type="radio" name="opcao" id="opcao1"> Opção 1</label>
-        <label for="opcao2"><input type="radio" name="opcao" id="opcao2"> Opção 2</label>
-        <!-- Adicione mais opções conforme necessário -->
+        <label for="recuperar-senha"><input type="checkbox"> Recuperar Senha</label>
+        <label for="alterar-cadastro-cliente"><input type="checkbox"> Alterar Cadastro Cliente</label>
+        <label for="alterar-cadastro-familia"><input type="checkbox"> Alterar Cadastro Família</label>
+        <label for="alterar-cadastro-profissional"><input type="checkbox"> Alterar Cadastro Profissional</label>
+        <label for="alterar-agenda-profissional"><input type="checkbox"> Alterar Agenda Profissional</label>
+        <label for="gerar-relatorio"><input type="checkbox"> Gerar Relatório</label>
+        <label for="incluir-cliente"><input type="checkbox"> Incluir Cliente</label>
+        <label for="criar-familia"><input type="checkbox"> Criar Família</label>
+        <label for="unir-cliente"><input type="checkbox"> Unir Cliente</label>
+        <label for="unir-familia"><input type="checkbox"> Unir Família</label>
+        <label for="incluir-privilegio"><input type="checkbox"> Incluir Privilégio</label>
+        <label for="excluir-privilegio"><input type="checkbox"> Excluir Privilégio</label>
+        <button type="button" id="registrar-ipm">Registrar</button>
+    </div>
 
-        <!-- Botão Registrar -->
-        <button type="button" id="registrar">Registrar</button>
+    <div id="opcoes-suporte-unidades" style="display: none;">
+        <h3>Opções de Suporte Unidades</h3>
+        <label for="limpeza-pc"><input type="checkbox"> Limpeza de PC</label>
+        <label for="troca-memoria-ram"><input type="checkbox"> Troca de Memória RAM</label>
+        <label for="troca-fonte-alimentacao"><input type="checkbox"> Troca de Fonte de Alimentação</label>
+        <label for="troca-cabo-alimentacao"><input type="checkbox"> Troca de Cabo de Alimentação</label>
+        <label for="troca-cabo-vga"><input type="checkbox"> Troca de Cabo VGA</label>
+        <label for="troca-cabo-hdmi"><input type="checkbox"> Troca de Cabo HDMI</label>
+        <label for="formatacao"><input type="checkbox"> Formatação</label>
+        <label for="descarte-equipamento"><input type="checkbox"> Descarte de Equipamento</label>
+        <label for="manutencao-impressora"><input type="checkbox"> Manutenção de Impressora</label>
+        <label for="configuracao-roteador"><input type="checkbox"> Configuração de Roteador</label>
+        <label for="cabeamento"><input type="checkbox"> Cabeamento</label>
+        <label for="configuracao-switch"><input type="checkbox"> Configuração de Switch</label>
+        <label for="troca-switch"><input type="checkbox"> Troca de Switch</label>
+        <label for="troca-roteador"><input type="checkbox"> Troca de Roteador</label>
+        <label for="troca-cpu"><input type="checkbox"> Troca de CPU</label>
+        <button type="button" id="registrar-unidades">Registrar</button>
+    </div>
+
+    <div id="Trabalho-Extra" style="display: none;">
+        <h3>Trabalho Extra</h3>
+        <label for="Formatacao-de-PC"><input type="checkbox"> Formatação de PC</label>
+        <label for="Limpeza-de-PC"><input type="checkbox"> Limpeza de PC</label>
+        <label for="Configuracao-de-Roteador"><input type="checkbox"> Configuração de Roteador</label>
+        <label for="Configuracao-de-Impressora"><input type="checkbox"> Configuração de Impressora</label>
+
+        <button type="button" id="registrar-trabalho-extra">Registrar</button>
     </div>
 </body>
 </html>
