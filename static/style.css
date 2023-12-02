@@ -1,0 +1,33 @@
+/* style.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    margin: 0 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar a:hover {
+    background-color: #555; /* Cor ao passar o mouse */
+    text-align: center;
+}
+/* Adicione isso no seu arquivo style.css */
+.navbar a.active {
+    background-color: #777;
+}

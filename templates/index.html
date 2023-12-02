@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seu Site</title>
+    <link rel="stylesheet" href="{{ css }}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#suporte-ipm").click(function(){
+                $("#opcoes-suporte-ipm").toggle();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <!-- Adicione o logo ou o nome do site aqui -->
+            <a href="#">Logo </a>
+        </div>
+        <div class="menu-tabs">
+            <!-- Abas do menu -->
+            <a href="#" id="suporte-ipm">Suporte IPM</a>
+            <a href="#">Suporte Unidades</a>
+            <a href="#">Trabalho Extra</a>
+        </div>
+    </div>
+
+    <!-- Contêiner de opções para Suporte IPM -->
+    <div id="opcoes-suporte-ipm" style="display: none;">
+        <h3>Opções de Suporte IPM</h3>
+        <label for="opcao1"><input type="checkbox" id="opcao1"> Opção 1</label>
+        <label for="opcao2"><input type="checkbox" id="opcao2"> Opção 2</label>
+        <!-- Adicione mais opções conforme necessário -->
+    </div>
+</body>
+</html>
