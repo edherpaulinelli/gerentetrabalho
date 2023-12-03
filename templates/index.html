@@ -1,0 +1,118 @@
+
+
+
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".menu-tab").click(function(){
+                var contentId = $(this).data("content");
+                $(".menu-content").hide();
+                $("#" + contentId).toggle();
+            });
+
+            $(".menu-content button").click(function(){
+                var contentId = $(this).closest('.menu-content').attr('id');
+                var opcoes = [];
+
+                $('#' + contentId + ' input[type=checkbox]:checked').each(function() {
+                    opcoes.push($(this).parent().text().trim());
+                });
+
+                $.ajax({
+                    url: '/registrar_opcao',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 'opcoes': opcoes }),
+                    success: function(response) {
+                        exibirMensagem(response.message);
+                        // Limpar opções selecionadas
+                        $('#' + contentId + ' input[type=checkbox]:checked').prop('checked', false);
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            });
+
+            function exibirMensagem(mensagem) {
+                $("#mensagem-sucesso").text(mensagem).fadeIn(500).delay(3000).fadeOut(500);
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <a href="#">Logo</a>
+        </div>
+        <div class="menu-tabs">
+            <a href="#" class="menu-tab" data-content="opcoes-suporte-ipm">Suporte IPM</a>
+            <a href="#" class="menu-tab" data-content="opcoes-suporte-unidades">Suporte Unidades</a>
+            <a href="#" class="menu-tab" data-content="trabalho-extra">Trabalho Extra</a>
+            <a href="/relatorio?filtro=dia" class="menu-tab">Relatório</a>
+        </div>
+    </div>
+
+    <div id="opcoes-suporte-ipm" class="menu-content">
+        <h3>Opções de Suporte IPM</h3>
+        <label for="recuperar-senha"><input type="checkbox"> Recuperar Senha</label>
+        <label for="alterar-cadastro-cliente"><input type="checkbox"> Alterar Cadastro Cliente</label>
+        <label for="alterar-cadastro-familia"><input type="checkbox"> Alterar Cadastro Família</label>
+        <label for="alterar-cadastro-profissional"><input type="checkbox"> Alterar Cadastro Profissional</label>
+        <label for="alterar-agenda-profissional"><input type="checkbox"> Alterar Agenda Profissional</label>
+        <label for="gerar-relatorio"><input type="checkbox"> Gerar Relatório</label>
+        <label for="incluir-cliente"><input type="checkbox"> Incluir Cliente</label>
+        <label for="criar-familia"><input type="checkbox"> Criar Família</label>
+        <label for="unir-cliente"><input type="checkbox"> Unir Cliente</label>
+        <label for="unir-familia"><input type="checkbox"> Unir Família</label>
+        <label for="incluir-privilegio"><input type="checkbox"> Incluir Privilégio</label>
+        <label for="excluir-privilegio"><input type="checkbox"> Excluir Privilégio</label>
+        <button type="button" id="registrar-ipm">Registrar</button>
+    </div>
+
+    <div id="opcoes-suporte-unidades" class="menu-content">
+        <h3>Opções de Suporte Unidades</h3>
+        <label for="limpeza-pc"><input type="checkbox"> Limpeza de PC</label>
+        <label for="troca-memoria-ram"><input type="checkbox"> Troca de Memória RAM</label>
+        <label for="troca-fonte-alimentacao"><input type="checkbox"> Troca de Fonte de Alimentação</label>
+        <label for="troca-cabo-alimentacao"><input type="checkbox"> Troca de Cabo de Alimentação</label>
+        <label for="troca-cabo-vga"><input type="checkbox"> Troca de Cabo VGA</label>
+        <label for="troca-cabo-hdmi"><input type="checkbox"> Troca de Cabo HDMI</label>
+        <label for="formatacao"><input type="checkbox"> Formatação</label>
+        <label for="descarte-equipamento"><input type="checkbox"> Descarte de Equipamento</label>
+        <label for="manutencao-impressora"><input type="checkbox"> Manutenção de Impressora</label>
+        <label for="configuracao-roteador"><input type="checkbox"> Configuração de Roteador</label>
+        <label for="cabeamento"><input type="checkbox"> Cabeamento</label>
+        <label for="configuracao-switch"><input type="checkbox"> Configuração de Switch</label>
+        <label for="troca-switch"><input type="checkbox"> Troca de Switch</label>
+        <label for="troca-roteador"><input type="checkbox"> Troca de Roteador</label>
+        <label for="troca-cpu"><input type="checkbox"> Troca de CPU</label>
+        <button type="button" id="registrar-unidades">Registrar</button>
+    </div>
+    </div>
+
+    <div id="trabalho-extra" class="menu-content">
+        <h3>Trabalho Extra</h3>
+        <label for="trabalho-extra"><input type="checkbox"> Trabalho Extra</label>
+        <label for="formatacao-de-pc"><input type="checkbox"> Formatação de PC</label>
+        <label for="limpeza-de-pc"><input type="checkbox"> Limpeza de PC</label>
+        <label for="configuracao-roteador"><input type="checkbox"> Configuração de Roteador</label>
+meu codigo html, preciso criar um app.py
+
+        <label for="configuracao-impressora"><input type="checkbox"> Configuração de Impressora</label>
+        <button type="button" id="registrar-trabalho-extra">Registrar</button>
+    </div>
+
+    <!-- Div para exibir mensagem de sucesso -->
+    <div id="mensagem-sucesso" class="mensagem-sucesso"></div>
+</body>
+</html>
