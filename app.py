@@ -1,15 +1,14 @@
-# Importando as bibliotecas necessárias
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from reportlab.pdfgen import canvas
+from openpyxl import Workbook
+from openpyxl.styles import Alignment
+from datetime import datetime
 
-# Configuração do Flask e do SQLAlchemy
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# Definindo o modelo de dados para a tabela 'Atividade'
 class Atividade(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     descricao = db.Column(db.String(255), nullable=False)
@@ -24,8 +23,7 @@ def index():
 def registrar_opcao():
     data = request.get_json()
 
-    # Criando uma nova atividade com a descrição da opção e uma data (substituir pela data real)
-    atividade = Atividade(descricao=data['opcoes'][0], data='2023-12-03')
+    atividade = Atividade(descricao=data['opcoes'][0], data='2023-12-03')  # Substitua '2023-12-03' pela data real
     db.session.add(atividade)
     db.session.commit()
 
@@ -35,39 +33,66 @@ def registrar_opcao():
 def relatorio():
     filtro = request.args.get('filtro')
 
-    # Lógica para obter dados do banco de dados
-    atividades = Atividade.query.all()
+    # Lógica para gerar o relatório com base no filtro
+    if filtro == 'dia':
+        # Exemplo simples: obter todas as atividades do banco de dados
+        atividades = Atividade.query.all()
+        # Geração do XLSX
+        generate_xlsx(atividades, filtro)
+        return jsonify({'message': f'Relatório gerado com sucesso para filtro: {filtro}'})
+    if filtro == 'semana':
+        # Exemplo simples: obter todas as atividades do banco de dados
+        atividades = Atividade.query.all()
+        # Geração do XLSX
+        generate_xlsx(atividades, filtro)
+        return jsonify({'message': f'Relatório gerado com sucesso para filtro: {filtro}'})
+    if filtro == 'mes':
+        # Exemplo simples: obter todas as atividades do banco de dados
+        atividades = Atividade.query.all()
+        # Geração do XLSX
+        generate_xlsx(atividades, filtro)
+        return jsonify({'message': f'Relatório gerado com sucesso para filtro: {filtro}'})
+    if filtro == 'ano':
+        # Exemplo simples: obter todas as atividades do banco de dados
+        atividades = Atividade.query.all()
+        # Geração do XLSX
+        generate_xlsx(atividades, filtro)
+        return jsonify({'message': f'Relatório gerado com sucesso para filtro: {filtro}'})
 
-    # Montar o conteúdo do relatório com base nos dados do banco de dados
-    content = "Relatório Personalizado\n\n"
-    content += f"Relatório para filtro: {filtro}\n\n"
-    content += "Atividades registradas:\n"
+    return jsonify({'error': 'Filtro não suportado'})
 
-    for atividade in atividades:
-        content += f"- Descrição: {atividade.descricao}, Data: {atividade.data}\n"
+def generate_xlsx(atividades, filtro):
+    filename = f"relatorio_{filtro}.xlsx"
+    document_title = "Relatório Atividades"
 
-    # Geração do PDF
-    generate_pdf(content)
+    wb = Workbook()
+    ws = wb.active
+    ws.title = document_title
 
-    return jsonify({'message': f'Relatório gerado com sucesso para filtro: {filtro}'})
+    # Adicionar título
+    ws['A1'] = document_title
+    ws['A2'] = ''
 
-# Função para gerar o PDF
-def generate_pdf(content):
-    filename = "relatorio.pdf"
-    document_title = "Relatório Personalizado"
+    # Adicionar dados
+    for i, atividade in enumerate(atividades, start=3):
+        ws[f'A{i}'] = f"Atividade: {atividade.descricao}"
+        ws[f'B{i}'] = f"Data: {atividade.data}"
+        ws[f'C{i}'] = ''  # Linha em branco entre atividades
 
-    # Configuração do PDF
-    pdf = canvas.Canvas(filename)
-    pdf.setTitle(document_title)
-    pdf.drawString(100, 800, document_title)
-    pdf.drawString(100, 780, content)
+    # Ajustar alinhamento
+    for row in ws.iter_rows():
+        for cell in row:
+            cell.alignment = Alignment(wrap_text=True)
 
-    # Salvar o PDF
-    pdf.save()
+    # Adicionar timestamp ao nome do arquivo
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename_with_timestamp = f"{filename[:-5]}_{timestamp}.xlsx"
 
-# Inicialização da aplicação Flask
+    # Salvar o XLSX
+    wb.save(filename_with_timestamp)
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-        app.run()
+    app.run(debug=True)
 
