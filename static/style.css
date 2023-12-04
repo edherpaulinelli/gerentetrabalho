@@ -1,95 +1,118 @@
-/* Reset some default styles */
-body, h1, h2, h3, p, ul, li {
-    margin: 0;
-    padding: 0;
-}
+/* static/style.css */
 
-/* Global Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
 }
 
-/* Navbar Styles */
 .navbar {
-    background-color: #2c3e50;
-    padding: 10px;
+    background-color: #333;
+    padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.navbar a {
-    color: #ecf0f1;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.2em;
-}
 
-/* Menu Tabs Styles */
+
 .menu-tabs {
     display: flex;
+    gap: 20px;
 }
 
 .menu-tab {
-    color: #3498db;
-    margin-right: 20px;
-    cursor: pointer;
-    transition: color 0.3s ease-in-out;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .menu-tab:hover {
-    color: #2980b9;
+    background-color: #555;
 }
 
-/* Menu Content Styles */
+.logo {
+    width: 50px;
+    height: auto;
+}
+
 .menu-content {
-    background-color: #ecf0f1;
-    padding: 20px;
-    margin-top: 10px;
-    border-radius: 10px;
     display: none;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-.menu-content h3 {
-    color: #333;
-    font-size: 1.5em;
-    margin-bottom: 15px;
+h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
 }
 
 label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
-/* Checkboxes Styles */
-input[type="checkbox"] {
-    margin-right: 5px;
-}
-
-/* Button Styles */
 button {
-    background-color: #3498db;
-    color: #ecf0f1;
-    padding: 10px 15px;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s ease-in-out;
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #555;
 }
 
-/* Success Message Styles */
+/* Restante do seu CSS ... */
+
+/* Estilo para a div de mensagem */
 .mensagem-sucesso {
-    background-color: #2ecc71;
-    color: #ecf0f1;
-    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50; /* Cor verde para mensagens de sucesso */
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin: 10px;
     border-radius: 5px;
-    margin-top: 10px;
     display: none;
+}
+
+/* Adiciona animação de fade in para a mensagem */
+.mensagem-sucesso.fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Adiciona animação de fade out para a mensagem */
+.mensagem-sucesso.fade-out {
+    animation: fadeOut 1s ease-in-out forwards;
+}
+
+/* Animação de fade in para a mensagem */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Animação de fade out para a mensagem */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
