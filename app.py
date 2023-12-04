@@ -30,36 +30,26 @@ def registrar_opcao():
     return jsonify({'message': 'Atividade registrada com sucesso!'})
 
 @app.route('/relatorio', methods=['GET'])
+# ... (código anterior permanece inalterado)
+
+@app.route('/relatorio', methods=['GET'])
 def relatorio():
     filtro = request.args.get('filtro')
 
     # Lógica para gerar o relatório com base no filtro
-    if filtro == 'dia':
+    if filtro in ['dia', 'semana', 'mes', 'ano']:
         # Exemplo simples: obter todas as atividades do banco de dados
         atividades = Atividade.query.all()
         # Geração do XLSX
         generate_xlsx(atividades, filtro)
-        return jsonify({'message': f'Relatório gerado com sucesso para filtro: {filtro}'})
-    if filtro == 'semana':
-        # Exemplo simples: obter todas as atividades do banco de dados
-        atividades = Atividade.query.all()
-        # Geração do XLSX
-        generate_xlsx(atividades, filtro)
-        return jsonify({'message': f'Relatório gerado com sucesso para filtro: {filtro}'})
-    if filtro == 'mes':
-        # Exemplo simples: obter todas as atividades do banco de dados
-        atividades = Atividade.query.all()
-        # Geração do XLSX
-        generate_xlsx(atividades, filtro)
-        return jsonify({'message': f'Relatório gerado com sucesso para filtro: {filtro}'})
-    if filtro == 'ano':
-        # Exemplo simples: obter todas as atividades do banco de dados
-        atividades = Atividade.query.all()
-        # Geração do XLSX
-        generate_xlsx(atividades, filtro)
-        return jsonify({'message': f'Relatório gerado com sucesso para filtro: {filtro}'})
+        return jsonify({'success': True, 'message': f'Relatório gerado com sucesso para filtro: {filtro}'})
 
-    return jsonify({'error': 'Filtro não suportado'})
+    return jsonify({'success': False, 'error': 'Filtro não suportado'})
+
+# ... (código posterior permanece inalterado)
+
+
+# ... (o código anterior permanece inalterado)
 
 def generate_xlsx(atividades, filtro):
     filename = f"relatorio_{filtro}.xlsx"
@@ -73,10 +63,24 @@ def generate_xlsx(atividades, filtro):
     ws['A1'] = document_title
     ws['A2'] = ''
 
+    # Adicionar títulos de coluna
+    ws['A3'] = 'Tarefa'
+    ws['B3'] = 'Quantidade'
+    ws['C3'] = ''  # Linha em branco entre títulos e dados
+
     # Adicionar dados
-    for i, atividade in enumerate(atividades, start=3):
-        ws[f'A{i}'] = f"Atividade: {atividade.descricao}"
-        ws[f'B{i}'] = f"Data: {atividade.data}"
+    dados_relatorio = {}
+
+    for atividade in atividades:
+        if atividade.descricao not in dados_relatorio:
+            dados_relatorio[atividade.descricao] = 1
+        else:
+            dados_relatorio[atividade.descricao] += 1
+
+    # Adicionar nome da tarefa e quantidade de vezes registrada
+    for i, (tarefa, quantidade) in enumerate(dados_relatorio.items(), start=4):
+        ws[f'A{i}'] = f"{tarefa}"
+        ws[f'B{i}'] = f"{quantidade}"
         ws[f'C{i}'] = ''  # Linha em branco entre atividades
 
     # Ajustar alinhamento
@@ -90,6 +94,9 @@ def generate_xlsx(atividades, filtro):
 
     # Salvar o XLSX
     wb.save(filename_with_timestamp)
+
+# ... (o código posterior permanece inalterado)
+
 
 if __name__ == '__main__':
     with app.app_context():

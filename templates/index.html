@@ -43,6 +43,36 @@
             function exibirMensagem(mensagem) {
                 $("#mensagem-sucesso").text(mensagem).fadeIn(500).delay(3000).fadeOut(500);
             }
+
+            function gerarRelatorio(filtro) {
+                $.ajax({
+                    url: `/relatorio?filtro=${filtro}`,
+                    type: 'GET',
+                    success: function(response) {
+                        if (response.success) {
+                            exibirMensagem(response.message);
+                        } else {
+                            console.error(response.error);
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            }
+
+            $("#relatorio-dia").click(function(){
+                gerarRelatorio("dia");
+            });
+            $("#relatorio-semana").click(function(){
+                gerarRelatorio("semana");
+            });
+            $("#relatorio-mes").click(function(){
+                gerarRelatorio("mes");
+            });
+            $("#relatorio-ano").click(function(){
+                gerarRelatorio("ano");
+            });
         });
     </script>
 </head>
@@ -55,16 +85,12 @@
             <a href="#" class="menu-tab" data-content="opcoes-suporte-ipm">Suporte IPM</a>
             <a href="#" class="menu-tab" data-content="opcoes-suporte-unidades">Suporte Unidades</a>
             <a href="#" class="menu-tab" data-content="trabalho-extra">Trabalho Extra</a>
-            <a href="/relatorio?filtro=dia" class="menu-tab">Relatório dia</a>
-            <a href="/relatorio?filtro=semana" class="menu-tab">Relatório semana</a>
-            <a href="/relatorio?filtro=mes" class="menu-tab">Relatório mês</a>
-            <a href="/relatorio?filtro=ano" class="menu-tab">Relatório ano</a>
+            <a href="#" id="relatorio-dia" class="menu-tab">Relatório dia</a>
+            <a href="#" id="relatorio-semana" class="menu-tab">Relatório semana</a>
+            <a href="#" id="relatorio-mes" class="menu-tab">Relatório mês</a>
+            <a href="#" id="relatorio-ano" class="menu-tab">Relatório ano</a>
         </div>
     </div>
-
-
-
-
     <div id="opcoes-suporte-ipm" class="menu-content">
         <h3>Opções de Suporte IPM</h3>
         <label for="recuperar-senha"><input type="checkbox"> Recuperar Senha</label>
